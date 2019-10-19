@@ -7,7 +7,10 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 import os
-from decouple import config
+import os
+import django_heroku
+import dj_database_url
+from decouple import config,Csv
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # Quick-start development settings - unsuitable for production
@@ -94,6 +97,8 @@ AUTH_PASSWORD_VALIDATORS = [
        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
    },
 ]
+
+django_heroku.settings(locals())
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/
 LANGUAGE_CODE = 'en-us'
@@ -113,7 +118,7 @@ MEDIA_URL='/media/'
 
 LOGIN_REDIRECT_URL='index'
 LOGIN_URL='login'
-
+db_from_env = dj_database_url.config(conn_max_age=500)
 # settings for sending email for passwordreset
 EMAIL_BACKEND='django.core.mail.backends.smtp.EmailBackend'
 EMAIL_USE_TLS=True
